@@ -7,6 +7,9 @@ export async function POST(request: NextRequest) {
 }
 
 function luhnCheck(card: string) {
+  if (card.length === 0) {
+    return false;
+  }
   const numVal = card.replace(/[^0-9]/g, "");
   const sums = [];
   let isSeconded = false;

@@ -2,9 +2,13 @@
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Button } from "~/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import CardAlert from "./cardAlert";
 
 export default function CreditCardForm() {
+  const [showAlert, setShowAlert] = useState<undefined | "success" | "error">(
+    undefined,
+  );
   const [creditCard, setCreditCard] = useState<string>("");
   const handleCCValidation = async () => {
     const res = await fetch("/api", {
@@ -12,7 +16,16 @@ export default function CreditCardForm() {
       body: JSON.stringify(creditCard),
     });
     const data = await res.json();
+    setShowAlert(data ? "success" : "error");
   };
+
+  useEffect(() => {
+    if (showAlert) {
+      setTimeout(() => {
+        setShowAlert(undefined);
+      }, 2000);
+    }
+  }, [showAlert]);
   return (
     <>
       <Label htmlFor="credit-card">Credit Card</Label>
@@ -35,7 +48,7 @@ export default function CreditCardForm() {
           setCreditCard(stripped);
         }}
       />
-      <div className="flex justify-end py-2">
+      <div className="flex justify-end py-4">
         <Button
           variant={"outline"}
           className="mx-2"
@@ -45,6 +58,14 @@ export default function CreditCardForm() {
         </Button>
         <Button onClick={handleCCValidation}>Submit</Button>
       </div>
+      <CardAlert
+        showAlert={showAlert}
+        message={
+          showAlert === "success"
+            ? "Your credit card has been successfully validated."
+            : "There was an error validating your card"
+        }
+      />
     </>
   );
 }
