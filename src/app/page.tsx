@@ -3,7 +3,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover
 import { Separator } from "~/components/ui/separator";
 import { HelpCircle } from "lucide-react";
 
-export default async function Home() {
+export default function Home() {
   return (
     <div className="flex flex-col items-center">
       <div className="text-2xl font-medium">Credit Card Validator</div>

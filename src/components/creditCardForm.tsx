@@ -15,7 +15,7 @@ export default function CreditCardForm() {
       method: "POST",
       body: JSON.stringify(creditCard),
     });
-    const { valid } = await res.json();
+    const { valid }: { valid: boolean } = await res.json();
     setShowAlert(valid ? "success" : "error");
   };
 
