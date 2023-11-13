@@ -5,6 +5,10 @@ import { Button } from "~/components/ui/button";
 import { useEffect, useState } from "react";
 import CardAlert from "./cardAlert";
 
+interface DataType {
+  valid: boolean;
+}
+
 export default function CreditCardForm() {
   const [showAlert, setShowAlert] = useState<undefined | "success" | "error">(
     undefined,
@@ -15,8 +19,8 @@ export default function CreditCardForm() {
       method: "POST",
       body: JSON.stringify(creditCard),
     });
-    const { valid }: { valid: boolean } = await res.json();
-    setShowAlert(valid ? "success" : "error");
+    const data: DataType = await res.json();
+    setShowAlert(data.valid ? "success" : "error");
   };
 
   useEffect(() => {
