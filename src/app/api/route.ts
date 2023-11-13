@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
   let isSeconded = false;
   for (let i = numVal.length - 1; i >= 0; i--) {
     if (isSeconded) {
-      let doubled = parseInt(numVal[i]!!) * 2;
+      const doubled = parseInt(numVal[i]!!) * 2;
       sums.push(doubled > 9 ? doubled - 9 : doubled);
     } else {
       sums.push(parseInt(numVal[i]!!));
