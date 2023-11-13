@@ -2,15 +2,10 @@ import { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
   const data = await request.json();
-  const isLuhn = luhnCheck(data);
-  return Response.json(isLuhn);
-}
-
-function luhnCheck(card: string) {
-  if (card.length === 0) {
-    return false;
+  if (data.length === 0) {
+    return Response.json({ valid: false });
   }
-  const numVal = card.replace(/[^0-9]/g, "");
+  const numVal = data.replace(/[^0-9]/g, "");
   const sums = [];
   let isSeconded = false;
   for (let i = numVal.length - 1; i >= 0; i--) {
@@ -23,5 +18,6 @@ function luhnCheck(card: string) {
     isSeconded = !isSeconded;
   }
   const totalSum = sums.reduce((acc, digit) => acc + digit, 0);
-  return totalSum % 10 === 0;
+  const isLuhn = totalSum % 10 === 0;
+  return Response.json({ valid: isLuhn });
 }

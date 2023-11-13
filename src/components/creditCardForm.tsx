@@ -15,8 +15,8 @@ export default function CreditCardForm() {
       method: "POST",
       body: JSON.stringify(creditCard),
     });
-    const data = await res.json();
-    setShowAlert(data ? "success" : "error");
+    const { valid } = await res.json();
+    setShowAlert(valid ? "success" : "error");
   };
 
   useEffect(() => {
@@ -31,6 +31,7 @@ export default function CreditCardForm() {
       <Label htmlFor="credit-card">Credit Card</Label>
       <Input
         placeholder="Enter credit card to validate..."
+        id="credit-card"
         className="my-1"
         value={creditCard}
         maxLength={19}
